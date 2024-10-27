@@ -28,37 +28,101 @@
             <div class="section intro-section">
                 <h1 class="intro-header">Intro</h1>
                 <p class="intro-text">
-                    Hey, we're MAMS (Matt, Aiden, Manuel, Sean, get it?)! Anyway, this is our Marina Hacks 4.0 project, Nulang!
+                    Hey, we're MAMS (Matt, Aiden, Manuel, Sean)! This is our Marina Hacks 4.0 project, Nulang!
                 </p>
             </div>
             <div class="section about-section">
                 <h1 class="about-header">About Nulang</h1>
                 <p class="about-text">
-                    Nulang is a programming language modeled around only uses a computer's numpad, including its numbers and arithmetic symbols, to code. So far, we can do:
+                    Nulang is a programming language with the idea that you only need to use a computer's numpad, including its numbers and arithmetic symbols, to code.
+                    All functionality provided so far can be 100% utilized from the numpad, but the language can be used with a normal keyboard.
+                    So far, we can do:
                 </p>
                 <ul>
-                    <li>Pass by Reference</li>
-                    <li>Lists and List Indexing</li>
-                    <li>Loops</li>
+                    <li>If/Else If/Else Statements</li>
+                    <li>Functions with parameters, pass by reference, & returning</li>
+                    <li>Lists with get, set, and length</li>
+                    <li>For & While Loops</li>
+                    <li>Comparison Operators</li>
+                    <li>Addition/Subtraction/Multiplication/Division</li>
+                    <li>AND & OR operators</li>
+                    <li>Lists, Integers, Strings</li>
                 </ul>
-            </div>
-            <div class="section sample-code-section">
-                <p class="about-text">
-                    Here's some simple programs we have so far:
-                </p>
-                <p class="code-text">
-                    sample code
-                </p>
-                <p class="console-text">
-                    947./.4./
-                </p>
             </div>
             <div class="section docs-button-section" align="center">
                 <a class="docs-button-link" href="docs.html">
                     <button onclick="" class="docs-button">
                         Try it out!
                     </button>
-                </a>         
+                </a>
+            </div>
+            <div class="section sample-code-section">
+                <h1 class="about-header">Quick Sort Example:</h1>
+                <p class="about-text">
+                    We implemented quick sort in Nulang in 2 different ways, the first way is using syntax only available on the numpad:
+                    <pre><code>
+72.1001.7.0002.0003.0004
+.-.0005.148.0002.0003
+.158.0002.0003.148.0002.0004
+.158.0002.0004.0005
+
+72.2001.7.0002.0003.0004
+.-.0055.0003
+.-.0006.0004
+.-.0007.148.0002.0003
+.88.--/.0055.0006
+..88.888.--/.0055.0004.-//.148.0002.0055.0007
+...-.0055.++.0055./.1./
+..88.888.+//.0006.0003.++/.148.0002.0006.0007
+...-.0006.--.0006./.1./
+..11.--/.0055.0006
+...1001.0002.0055.0006
+.1001.0002.0003.0006
+.27.0006
+
+72.3001.7.0002.0003.0004
+.11.--/.--.0004.0003./.1./
+..27.404
+.-.0555.2001.0002.0003.0004
+.3001.0002.0003.--.0555./.1./
+.3001.0002.++.0555./.1./.0004
+
+-.0000./*./.7././.2././.9././.4././.10././.8./.*/
+3001.0000./.0././.5./
+947.0000
+                    </code></pre>
+                    <br>And here is quick sort using more readable variable names:<br><br>
+                    <pre><code>
+72.swap.7.arr.left.right
+.-.temp.148.arr.left
+.158.arr.left.148.arr.right
+.158.arr.right.temp
+
+72.partition.7.arr.left.right
+.-.l.left
+.-.r.right
+.-.pivot.148.arr.left
+.88.--/.l.r
+..88.888.--/.l.right.-//.148.arr.l.pivot
+...-.l.++.l./.1./
+..88.888.+//.r.left.++/.148.arr.r.pivot
+...-.r.--.r./.1./
+..11.--/.l.r
+...swap.arr.l.r
+.swap.arr.left.r
+.27.r
+
+72.quick_sort.7.arr.left.right
+.11.--/.--.right.left./.1./
+..27.404
+.-.pivot_idx.partition.arr.left.right
+.quick_sort.arr.left.--.pivot_idx./.1./
+.quick_sort.arr.++.pivot_idx./.1./.right
+
+-.array./*./.7././.2././.9././.4././.10././.8./.*/
+quick_sort.array./.0././.5./
+947.array
+                    </code></pre>
             </div>
         </div>
     </body>

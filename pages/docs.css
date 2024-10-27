@@ -109,7 +109,7 @@ button {
 }
 
 .header-link {
-  margin-left: 1em;
+  margin-left: 2em;
 }
   
 /* Left column (Documentation) */
@@ -146,7 +146,7 @@ button {
 }
 
 .run-button:hover {
-  transform: scale(1.1);
+  transform: scale(1.08);
 }
 
 /*.run-button {*/

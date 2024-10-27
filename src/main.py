@@ -85,8 +85,10 @@ def print_func(user_functions, variables, tokens, available_functions):
 
     if isinstance(r, list):
         print('/*', end='')
+        s = ''
         for rv in r:
-            print(rv, end='.')
+            s += rv + '.'
+        print(s[:-1], end='')
         print('*/')
     else:
         print(r)
