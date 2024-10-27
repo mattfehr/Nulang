@@ -27,22 +27,63 @@
                 <h1 class="documentation-header">This is gonna be where we type the documentation !!! </h1>
                 <p class="documentation-text">
                     hello
-                </p>   
+                </p>
+                <h2>Variable Assignment</h2>
+                <p>
+                    In Nulang, variable assignments are made using the <code>-</code> symbol. The syntax begins with a <code>-</code> followed by the variable's name and its assignment value. 
+
+                    Example: <code>-.1001./.1./</code> would assign the integer value <code>1</code> to the variable <code>1001</code>
+
+                    Additionally, all user-defined elements in Nulang, such as variables and functions, must be named using integers of 4 or more digits.   
+                </p>
+                <h2>Whitespace</h2>
+                <p>
+                    In Nulang, the "." character serves as a substitute for traditional whitespace and indentation. It functions as a separator for arguments as well as indicates indentations for loops and block structures.
+                </p>
+                <h2>Basic Operator Construct</h2>
+                <p>
+                    In Nulang, all operators must be used in prefix notation. 
+
+                    Example: ++.argument_1.argument_2       Logically equals: argument_1 + argument_2
+                </p>
+                <h2>Comparative Operators</h2>
+                <p>
+                    ++/ ... &gt;, +// ... &gt;=, --/ is &lt;, -// is &lt;=, /// is ==, and /-/ is !=.
+                </p>
+                <h2>Arithmetic Operators</h2>
+                <p>
+                    ++ ... +
+                    -- ... -
+                    // is /
+                    ** is *
+                </p>
+                <h2>Concept 5</h2>
+                <p>
+                    Lorem ipsum odor amet, consectetuer adipiscing elit. Penatibus curae pellentesque facilisis vestibulum enim parturient. Faucibus magnis eleifend, primis est quis dapibus. Vehicula aenean hendrerit quam natoque lacus sit felis. In natoque montes integer metus sem elementum varius dictum cursus. Ligula purus nisl venenatis himenaeos curae natoque. Accumsan ipsum hac maximus mollis curae massa ante. Donec ad tempus augue ipsum dapibus dictum. Netus felis eros cubilia id pretium lacus.
+                </p>
+                <h2></h2>
+                <p>
+                    Lorem ipsum odor amet, consectetuer adipiscing elit. Penatibus curae pellentesque facilisis vestibulum enim parturient. Faucibus magnis eleifend, primis est quis dapibus. Vehicula aenean hendrerit quam natoque lacus sit felis. In natoque montes integer metus sem elementum varius dictum cursus. Ligula purus nisl venenatis himenaeos curae natoque. Accumsan ipsum hac maximus mollis curae massa ante. Donec ad tempus augue ipsum dapibus dictum. Netus felis eros cubilia id pretium lacus.
+                </p>
             </div>
             <div class="interpreter-side">
                 <div class="run-button-section">
-                    <button class="run-button">
+                    <button class="run-button" onclick="runCode()">
                         RUN
                     </button>
                 </div>
                 <div class="interpreter-section">
-                    <textarea class="interpreter" ROWS="20" cols="60"></textarea>
+                    <textarea class="interpreter" id="interpreter-id" ></textarea>
                 </div>
                 <div class="terminal-section">
                     <h1>Terminal</h1>
-                    <p class="output"></p>
+                    <p class="terminal" id="terminal-id">
+                        cols 75 rows 18
+                    </p>
                 </div>
             </div>
-        </div>   
+        </div> 
+        
+        <script src="code.js"></script>
     </body>
 </html>
