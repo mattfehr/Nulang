@@ -3,6 +3,7 @@
     <head>
         <title>Documentation</title>
         <link rel="stylesheet" href="docs.css">
+        <link href='https://fonts.googleapis.com/css?family=Noto Sans Mono' rel='stylesheet'>
     </head>
     <body>
         <div class="header-section">
@@ -37,18 +38,25 @@
                 <p>
                     In Nulang, the <code>.</code> character serves as a substitute for traditional whitespace and indentation. It functions as a separator for arguments as well as indicates indentations for loops and block structures.
                 </p>
+                <h2>Comments</h2>
+                <p>
+                    To initiate a comment in Nulang one must use the <code>*</code> character. <br>
+                    <br>Example: <code>-.3012./.12./.*. &emsp; Sets 3012 to the value of 12</code>
+                </p>
                 <h2>Basic Operator Construct</h2>
                 <p>
                     In Nulang, all operators must be used in prefix notation. 
                     <br><br>
                     Example: <code>++.argument_1.argument_2</code>&emsp;Logically equals: argument_1 + argument_2
+                    <br><br>
+                    Example: <code>--.++.argument_1.argument_2.argument_3</code>&emsp;Logically equals: argument_1 + argument_2 - argument_3
                 </p>
                 <h2>Comparative Operators</h2>
                 <p>
                     <code>++/</code> &ensp; &rarr; &ensp; &gt;<br><code>+//</code> &ensp; &rarr; &ensp; &gt; <br><code>--/</code> &ensp; &rarr; &ensp; &lt;
                     <br><code>-//</code> &ensp;     &rarr; &ensp; &lt; <br><code>///</code> &ensp; &rarr; &ensp; == <br><code>/-/</code> &ensp; &rarr; &ensp; !=
                 </p>
-                <h2>Binary Operators</h2>
+                <h2>Arithmetic Operators</h2>
                 <p>
                     <code>++</code> &ensp; &rarr; &ensp; + <br><code>--</code> &ensp; &rarr; &ensp; - <br><code>//</code> &ensp; &rarr; &ensp; / <br><code>**</code> &ensp; &rarr; &ensp; *
                 </p>
@@ -60,13 +68,19 @@
                 <p>
                     Strings:&emsp;Defined within <code>/-</code> and <code>-/</code>, strings represent sequences of 3-digit ASCII values.<br>
                     &emsp;&emsp;<code>/-.072101108108111032087111114108100033.-/</code> &ensp; &rarr; &ensp; "Hello World!"
+                    <br>
+                    ASCII Table: To print letters to the console, here's an ASCII table as reference.
                     <br><br>
+                    &emsp;&emsp;<img src="https://cdn.shopify.com/s/files/1/1014/5789/files/Standard-ASCII-Table_large.jpg?10669400161723642407">
+                    <br>
                     Integers:&emsp;Defined within <code>/.</code> and <code>./</code><br>
                     &emsp;&emsp;<code>/.100./</code>&emsp;&emsp;Represents integer 100
                     <br><br>
                     Lists:&emsp;Defined within <code>/*</code> and <code>*/</code><br>
                     &emsp;&emsp;<code>/*./.1././.2././.4././.8./.*/</code>&emsp;&emsp;[1, 2, 4, 8]<br><br>
                     Boolean:&emsp;Defined as either <code>0</code> or <code>1</code>
+                    <br><br>
+                    Null:&emsp;Defined as <code>404</code>
                 </p>
                 <h2>Loops</h2>  <!-- TODO -->
                 <p>
@@ -83,15 +97,22 @@
                 </p>
                 <h2>Built in Functions</h2> <!-- TODO -->
                 <p>
-                    Print:&emsp;Defined as <code>947</code>
+                    Print:&emsp;Defined as <code>947.argument</code>
                     <br><br>
-                    Length:&emsp;Defined as <code>138</code>
+                    Length:&emsp;Defined as <code>138.array</code>
                     <br><br>
-                    Indexing:&emsp;Splicing:&emsp;Defined as <code></code>
+                    Indexing:&emsp;Splicing:&emsp;Defined as <code>198.array.begin.end</code> <br>
+                    &emsp;&emsp;&emsp;Get Index:&emsp;Defined as <code>148.array.index</code> <br>
+                    &emsp;&emsp;&emsp;Set Index:&emsp;Defined as <code>158.array.index.value</code>
 
                 </p>
                 <h2>Function Definitions</h2> <!-- TODO -->
                 <p>
+                    Function:&emsp;Defined as <code>72.function_name.parameter_n</code>, with <code>parameter_n</code> being zero to many parameters.
+                    <br>
+                    &emsp;&emsp;&emsp;Return:&emsp;Defined as <code>27.return_variable</code>
+                    <br>&emsp;&emsp;&emsp;Returns are not required at the end of every function.
+                    <br>&emsp;&emsp;&emsp;Reference:&emsp;Defined as 7..
                     
                 </p>
             </div>

@@ -9,11 +9,11 @@ h5 {
 * {
   background-color: #3c4c64;
   color: #c0ecf7;
-  font-family: Calibri;
+  font-family: Noto Sans Mono;
 }
 
 p, li {
-  font-size: 20px;
+  font-size: 17px;
   margin: 0;
   background-color: inherit;
 }
@@ -101,11 +101,15 @@ button {
 }
 
 .docs-button {
-  font-size: 2em;
+  font-size: 1.8em;
   font-weight: bolder;
   background-color: inherit;
   width: 100%;
   color: #3c4c64;
+}
+
+.docs-button:hover {
+  transform: scale(1.1);
 }
 
 .header-link {
