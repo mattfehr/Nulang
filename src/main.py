@@ -12,7 +12,7 @@ class UserFunction:
     def __init__(self, parsed_lines, name, partial_params, lines):
         self.parsed_lines = parsed_lines
         self.return_val = DEF_NULL
-        self.params = []
+        self.params = [] 
         self.params_ref = {}
         self.name = name
         self.lines = lines
