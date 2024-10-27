@@ -34,7 +34,7 @@ def run_code():
             f.write(code)
 
         try:
-            result = subprocess.run(['nulang', filename], capture_output=True, text=True, timeout=30)
+            result = subprocess.run(['python', 'src/main.py', filename], capture_output=True, text=True, timeout=30)
             output = result.stdout if result.returncode == 0 else result.stderr
         finally:
             if os.path.exists(filename):
