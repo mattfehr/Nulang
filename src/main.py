@@ -1,3 +1,4 @@
+import copy
 import json
 import sys
 
@@ -29,6 +30,7 @@ class UserFunction:
                     self.params_ref[partial_param] = False
                 is_reference = False
         self.params_len = len(self.params)
+        self.current_function = False
 
 def eval_tokens_amount(user_functions, variables, tokens, available_functions, amount):
     values = []
@@ -93,19 +95,23 @@ def index_at(user_functions, variables, tokens, available_functions):
 
     var_val = tokens[0]
     idx, ut = eval_tokens(user_functions, variables, tokens[1:], available_functions)
-    return variables[var_val][int(idx[0])], ut
+    return variables[var_val][int(idx)], ut
 
 def uf_return(user_functions, variables, tokens, available_functions):
     # 148.item
 
-    pass
+    for uf_name in user_functions:
+        actual_obj = user_functions[uf_name]
+        if actual_obj.current_function:
+            val, ut = eval_tokens(user_functions, variables, tokens, available_functions)
+            actual_obj.return_val = val
 
 def index_set(user_functions, variables, tokens, available_functions):
     # 148.item
 
     var_val = tokens[0]
     vals, ut = eval_tokens_amount(user_functions, variables, tokens[1:], available_functions, 2)
-    variables[var_val][int(vals[0][0])] = vals[1][0]
+    variables[var_val][int(vals[0])] = vals[1]
     return None, ut
 
 def gt(user_functions, variables, tokens, available_functions):
@@ -240,8 +246,7 @@ def eval_data_type(tokens):
         while list_tokens:
             av, no_ut = eval_data_type(list_tokens)
             list_tokens = no_ut
-            avs.append(av[0])
-
+            avs.append(av)
         v = avs
     else:
         v = v[0]
@@ -270,11 +275,17 @@ def eval_tokens(user_functions, variables, tokens, available_functions):
     elif tokens[0] in user_functions:
 
         uf_obj = user_functions[tokens[0]]
-        uf_vars = {}
+        uf_obj.current_function = True
+        uf_vars = {DEF_NULL: 'null'}
         vals, ut = eval_tokens_amount(user_functions, variables, tokens[1:], available_functions, uf_obj.params_len)
         for k, val in enumerate(vals):
-            uf_vars[uf_obj.params[k]] = val
+            if uf_obj.params_ref[uf_obj.params[k]]:
+                uf_vars[uf_obj.params[k]] = val
+            else:
+                uf_vars[uf_obj.params[k]] = copy.deepcopy(val)
         eval_lines(user_functions, uf_vars, uf_obj.lines, uf_obj.parsed_lines)
+        v = uf_obj.return_val
+        uf_obj.current_function = False
 
     else:
         print(variables)
@@ -297,15 +308,22 @@ def eval_lines(user_functions, variables, all_lines, parsed_lines):
             if tokenized[0] in reserved_functions:
                 reserved_functions[tokenized[0]](user_functions, variables, tokenized[1:], reserved_functions)
 
+                if tokenized[0] == '27':
+                    return '27'
+
             elif tokenized[0] in user_functions:
 
                 uf_obj = user_functions[tokenized[0]]
-                uf_vars = {}
-                vals, ut = eval_tokens_amount(user_functions, variables, tokenized[1:], reserved_functions,
-                                              uf_obj.params_len)
+                uf_obj.current_function = True
+                uf_vars = {DEF_NULL: 'null'}
+                vals, ut = eval_tokens_amount(user_functions, variables, tokenized[1:], reserved_functions, uf_obj.params_len)
                 for k, val in enumerate(vals):
-                    uf_vars[uf_obj.params[k]] = val
+                    if uf_obj.params_ref[uf_obj.params[k]]:
+                        uf_vars[uf_obj.params[k]] = val
+                    else:
+                        uf_vars[uf_obj.params[k]] = copy.deepcopy(val)
                 eval_lines(user_functions, uf_vars, uf_obj.lines, uf_obj.parsed_lines)
+                uf_obj.current_function = False
 
             else:
                 fatal_error(f'fail at eval lines {tokenized}')
@@ -314,7 +332,9 @@ def eval_lines(user_functions, variables, all_lines, parsed_lines):
             if tokenized[0] == '11':
                 if_eval, ut = indentation[tokenized[0]](user_functions, variables, tokenized[1:], reserved_functions)
                 if if_eval == DEF_TRUE:
-                    eval_lines(user_functions, variables, all_lines, parsed_lines[line_num])
+                    pc = eval_lines(user_functions, variables, all_lines, parsed_lines[line_num])
+                    if pc == '27':
+                        return '27'
                 else:
                     check_elif_else = True
                 if_happened = True
@@ -323,14 +343,18 @@ def eval_lines(user_functions, variables, all_lines, parsed_lines):
                 if check_elif_else:
                     if_eval, ut = indentation[tokenized[0]](user_functions, variables, tokenized[1:], reserved_functions)
                     if if_eval == DEF_TRUE:
-                        eval_lines(user_functions, variables, all_lines, parsed_lines[line_num])
+                        pc = eval_lines(user_functions, variables, all_lines, parsed_lines[line_num])
+                        if pc == '27':
+                            return '27'
                         check_elif_else = False
                 elif not if_happened:
                     fatal_error('incorrect elif')
 
             elif tokenized[0] == '22':
                 if check_elif_else:
-                    eval_lines(user_functions, variables, all_lines, parsed_lines[line_num])
+                    pc = eval_lines(user_functions, variables, all_lines, parsed_lines[line_num])
+                    if pc == '27':
+                        return '27'
                 elif not if_happened:
                     fatal_error('incorrect else')
 
@@ -339,7 +363,9 @@ def eval_lines(user_functions, variables, all_lines, parsed_lines):
                 if_eval, ut = eval_tokens(user_functions, variables, tokenized[1:], reserved_functions)
 
                 while if_eval == DEF_TRUE:
-                    eval_lines(user_functions, variables, all_lines, parsed_lines[line_num])
+                    pc = eval_lines(user_functions, variables, all_lines, parsed_lines[line_num])
+                    if pc == '27':
+                        return '27'
                     if_eval, ut = eval_tokens(user_functions, variables, tokenized[1:], reserved_functions)
 
             elif tokenized[0] == '00':
@@ -348,7 +374,9 @@ def eval_lines(user_functions, variables, all_lines, parsed_lines):
                 condition, func_call_tokens = eval_tokens(user_functions, variables, ut, reserved_functions)
 
                 while condition == DEF_TRUE:
-                    eval_lines(user_functions, variables, all_lines, parsed_lines[line_num])
+                    pc = eval_lines(user_functions, variables, all_lines, parsed_lines[line_num])
+                    if pc == '27':
+                        return '27'
                     eval_tokens(user_functions, variables, func_call_tokens, reserved_functions)
                     condition, _ = eval_tokens(user_functions, variables, ut, reserved_functions)
             elif tokenized[0] == '72':
