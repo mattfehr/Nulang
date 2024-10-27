@@ -1,0 +1,71 @@
+h5 * {
+  background-color: #3bba9c;
+  background-color: #2e3047;
+  background-color: #43455c;
+  background-color: #3c3f58;
+  background-color: #707793;
+}
+
+* {
+  background-color: #2e3047;
+  color: whitesmoke;
+  font-family: Calibri;
+}
+
+.header-section {
+  display: flex;
+  background-color: aqua;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.title-section {
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.links-section {
+  display: flex;
+  background-color: aliceblue;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.main {
+  display: flex;
+  height: 85vh;
+  width: 100%;
+}
+  
+/* Left column (Documentation) */
+.documentation-side {
+  width: 57.5%;
+  overflow-y: scroll;
+  padding: 10px;
+}
+
+/* Right column (Playground)*/
+.interpreter-side {
+  width: 37.5%;
+  padding: 25px;
+}
+
+.run-button-section {
+  align-content: "center";
+}
+
+.interpreter {
+  width: 37vw;
+  height: 40vh;
+  padding: 5px;
+  resize: none;
+}
+
+.terminal {
+  border-style: solid;
+  border-radius: 15px;
+  border-color: blue;
+  padding: 10px;
+  height: 20vh;
+  width: 36vw;
+}
