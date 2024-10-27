@@ -214,7 +214,7 @@ reserved_functions = {
     '///': equality,
     '/-/': not_equals,
 
-    # binary operators
+    # something operators
     '++': add,
     '--': sub,
     '//': division,

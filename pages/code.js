@@ -1,19 +1,26 @@
-function runCode() {
+async function runCode() {
     let interpreterCode = document.getElementById('interpreter-id');
     let terminalOutput = document.getElementById('terminal-id');
 
-    console.log(interpreterCode);
-    console.log(terminalOutput);
+    try {
+        const response = await fetch('/run-code', {  // Replace with your endpoint
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                code: interpreterCode.value  // Assuming interpreterCode is a textarea/input
+            })
+        });
 
-    /* 
-    Aiden's code will do something with the given interpreter code and whatever else here
-    */
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
 
-    var aidensOutput = "";
-
-    terminalOutput.textContent = aidensOutput;
-};
-
-function pasteCode(elementId) {
-    
-};
+        const result = await response.json();
+        terminalOutput.textContent = result.output;
+    } catch (error) {
+        console.error('Error:', error);
+        terminalOutput.textContent = 'Error executing code: ' + error.message;
+    }
+}

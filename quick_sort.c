@@ -23,9 +23,6 @@ int partition(int arr[], int left, int right) {
             swap(arr, i, j);
         }
     }
-    printf("%d \n", i);
-    printf("%d \n", j);
-    printf("%d \n", pivot);
     swap(arr, left, j);
     return j;
 }
