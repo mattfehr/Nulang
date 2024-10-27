@@ -1,5 +1,5 @@
-import sys
 import json
+import sys
 
 DEF_NULL = '404'
 DEF_TRUE = '1'
@@ -20,10 +20,15 @@ def eval_tokens_amount(user_functions, variables, tokens, available_functions, a
 
     return values, use_tokens
 
-def bool_changer(v):
-    if v:
-        return DEF_TRUE
-    return DEF_FALSE
+def bool_changer(v, r = False):
+    if r:
+        if v == DEF_TRUE:
+            return True
+        return False
+    else:
+        if v:
+            return DEF_TRUE
+        return DEF_FALSE
 
 def assignment(user_functions, variables, tokens, available_functions):
     # -.var.eval
@@ -35,9 +40,6 @@ def assignment(user_functions, variables, tokens, available_functions):
     v, ut = eval_tokens_amount(user_functions, variables, tokens[1:], available_functions, 1)
     variables[tokens[0]] = v[0]
     return None, ut
-
-def func(user_functions, variables, tokens, available_functions):
-    pass
 
 def if_statement(user_functions, variables, tokens, available_functions):
     # 11.evalB
@@ -57,7 +59,7 @@ def print_func(user_functions, variables, tokens, available_functions):
         fatal_error(ut)
     print(r)
 
-def length_func(user_functions, variables, tokens, available_functions):
+def length_func(_user_functions, variables, tokens, _available_functions):
     # 138.var
 
     var_val = tokens[0]
@@ -114,6 +116,18 @@ def not_equals(user_functions, variables, tokens, available_functions):
     vals, ut = eval_tokens_amount(user_functions, variables, tokens, available_functions, 2)
     return bool_changer(int(vals[0]) != int(vals[1])), ut
 
+def and_comp(user_functions, variables, tokens, available_functions):
+    # 888.eval.eval
+
+    vals, ut = eval_tokens_amount(user_functions, variables, tokens, available_functions, 2)
+    return bool_changer(bool_changer(vals[0], r=True) and bool_changer(vals[1], r=True)), ut
+
+def or_comp(user_functions, variables, tokens, available_functions):
+    # 111.eval.eval
+
+    vals, ut = eval_tokens_amount(user_functions, variables, tokens, available_functions, 2)
+    return bool_changer(bool_changer(vals[0], r=True) or bool_changer(vals[1], r=True)), ut
+
 def add(user_functions, variables, tokens, available_functions):
     # ++.eval.eval
 
@@ -144,16 +158,18 @@ indentation = {
     '11': if_statement,
     '12': elif_statement,
     '22': lambda x: x,
+    '72': lambda x: x,
 }
 
 reserved_functions = {
     # special
     '-': assignment,
-    '437': func,
     '947': print_func,
     '138': length_func,
     '148': index_at,
     '158': index_set,
+    '888': and_comp,
+    '111': or_comp,
 
     # comparison
     '++/': gt,
@@ -198,6 +214,8 @@ def eval_data_type(tokens):
             avs.append(av[0])
 
         v = avs
+    else:
+        v = v[0]
 
     return v, unused_tokens
 
@@ -220,7 +238,17 @@ def eval_tokens(user_functions, variables, tokens, available_functions):
     elif tokens[0] == DEF_COMMENT:
         unused_tokens = []
 
+    elif tokens[0] in user_functions:
+
+        uf_tup = user_functions[tokens[0]]
+        uf_vars = {}
+        vals, ut = eval_tokens_amount(user_functions, variables, tokens[1:], available_functions, uf_tup)
+        for k, val in enumerate(vals):
+            uf_vars[uf_tup[0][k]] = val
+        eval_lines(user_functions, uf_tup, uf_tup, uf_tup)
+
     else:
+        print(variables)
         fatal_error(f'Syntax Error:\n{tokens}')
 
     return v, unused_tokens
@@ -239,6 +267,19 @@ def eval_lines(user_functions, variables, all_lines, parsed_lines):
 
             if tokenized[0] in reserved_functions:
                 reserved_functions[tokenized[0]](user_functions, variables, tokenized[1:], reserved_functions)
+
+                if tokenized[0] == '27':
+                    uf_copy = list(user_functions.keys())
+                    return user_functions[uf_copy[0]][-1]
+
+            elif tokenized[0] in user_functions:
+
+                uf_tup = user_functions[tokenized[0]]
+                uf_vars = {}
+                vals, ut = eval_tokens_amount(user_functions, variables, tokenized[1:], reserved_functions, len(uf_tup[0]))
+                for k, val in enumerate(vals):
+                    uf_vars[uf_tup[0][k]] = val
+                eval_lines(user_functions, uf_vars, uf_tup[2], uf_tup[1])
 
             else:
                 fatal_error(f'fail at eval lines {tokenized}')
@@ -267,7 +308,7 @@ def eval_lines(user_functions, variables, all_lines, parsed_lines):
                 elif not if_happened:
                     fatal_error('incorrect else')
 
-            elif tokenized[0] == '00':
+            elif tokenized[0] == '88':
 
                 if_eval, ut = eval_tokens(user_functions, variables, tokenized[1:], reserved_functions)
 
@@ -275,7 +316,7 @@ def eval_lines(user_functions, variables, all_lines, parsed_lines):
                     eval_lines(user_functions, variables, all_lines, parsed_lines[line_num])
                     if_eval, ut = eval_tokens(user_functions, variables, tokenized[1:], reserved_functions)
 
-            elif tokenized[0] == '88':
+            elif tokenized[0] == '00':
                 _, ut = eval_tokens(user_functions, variables, tokenized[1:], reserved_functions)
 
                 condition, func_call_tokens = eval_tokens(user_functions, variables, ut, reserved_functions)
@@ -284,6 +325,13 @@ def eval_lines(user_functions, variables, all_lines, parsed_lines):
                     eval_lines(user_functions, variables, all_lines, parsed_lines[line_num])
                     eval_tokens(user_functions, variables, func_call_tokens, reserved_functions)
                     condition, _ = eval_tokens(user_functions, variables, ut, reserved_functions)
+            elif tokenized[0] == '72':
+                # uf_tup:
+                # 0 - params
+                # 1 - parsed lines
+                # 2 - all lines
+                # 3 - return val
+                user_functions[tokenized[1]] = (tokenized[2:], parsed_lines[line_num], all_lines, DEF_NULL)
 
 def fatal_error(output):
     print(output)
@@ -314,8 +362,6 @@ def main():
 
         variables = {DEF_NULL: 'null'}
         user_functions = {}
-        # define the user defined functions
-        # run the rest of the code
         parsed_lines = {}
 
         nested = []
@@ -333,7 +379,8 @@ def main():
                 fatal_error('Bad indent')
 
             elif token_count < len(nested):
-                nested.pop()
+                for _ in range(len(nested) - token_count):
+                    nested.pop()
 
             line = line[token_count:]
             apply_nested(parsed_lines, nested, i)
