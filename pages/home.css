@@ -14,6 +14,25 @@ h5 {
 
 p, li {
   font-size: 20px;
+  margin: 0;
+  background-color: inherit;
+}
+
+a {
+  text-decoration: none;
+}
+
+ul {
+  background-color: inherit;
+}
+
+h1 {
+  margin: 0;
+  background-color: inherit;
+}
+
+button {
+  all: unset;
 }
 
 .header-section {
@@ -23,27 +42,29 @@ p, li {
   justify-content: space-between;
   border-radius: 10px;
   margin: 2px;
+  margin-bottom: 1em;
   * {
     background-color: #3c4c64;
   }
 }
 
 .title-section {
-  margin-right: auto;
-  margin-left: auto;
+  display: flex;
+  align-items: center;
 }
 
 .title {
   font-size: 50px;
-  padding: 5px;
-  margin-left: 13vw;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .links-section {
   display: flex;
-  justify-content: space-between;
-  gap: 20px;
-  margin-right: 65px;
+  margin-left: auto;
+  align-items: center;
+  padding-right: 1em;
 }
 
 .main {
@@ -52,52 +73,43 @@ p, li {
   width: 85vw;
   position: absolute;
   left: 7.5vw;
-  div {
-    margin-bottom: 25px;
-  }
+  background-color: inherit;
 }
 
-.intro-section {
-  border: solid;
+.section {
+  margin-bottom: 1.1em;
   border-color: #c0ecf7;
   border-radius: 10px;
-  padding: 10px;
-  margin-top: 10px;
   background-color: #55687e;
-  * {
-    background-color: #55687e;
-  }
+  border: none;
+  padding: 10px;
+
 }
 
-.about-section {
-  border: solid;
-  border-color: #c0ecf7;
-  border-radius: 10px;
-  padding: 10px;
-  margin-top: 10px;
-  background-color: #55687e;
-  * {
-    background-color: #55687e;
-  }
+.docs-button-section {
+  width: 15%;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #c0ecf7;
+  color: #3c4c64;
 }
 
-.code-section {
-  border: solid;
-  border-color: #c0ecf7;
-  border-radius: 10px;
-  padding: 10px;
-  margin-top: 10px;
-  background-color: #55687e;
-  * {
-    background-color: #55687e;
-  }
+.docs-button-link {
+  background-color: inherit;
+  color: #3c4c64;
 }
 
 .docs-button {
-  background-color: #6b8498;
-  border-color: #c0ecf7;
-  font-size: 30px;
-  padding: 10px;
-  border-radius: 10px;
+  font-size: 2em;
+  font-weight: bolder;
+  background-color: inherit;
+  width: 100%;
+  color: #3c4c64;
 }
+
+.header-link {
+  margin-left: 1em;
+}
+
 

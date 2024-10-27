@@ -7,15 +7,15 @@
     <body>
         <div class="header-section">
             <div class="title-section">
-                <h1 class="title">Nuugle</h1>
+                <h1 class="title">Nulang</h1>
             </div>
             <div class="links-section">
-                <div class="home-header-link">
+                <div class="header-link">
                     <a class="home-link" href="home.html">
                         <h2 class="home-link-text">Home</h2>
                     </a>
                 </div>
-                <div class="docs-header-link">
+                <div class="header-link">
                     <a class="docs-link" href="docs.html">
                         <h2 class="docs-link-text">Docs</h2>
                     </a>
@@ -24,7 +24,7 @@
         </div>
         <div class="main">
             <div class="documentation-side">
-                <h1 class="documentation-header">This is gonna be where we type the documentation !!! </h1>
+                <h1 class="documentation-header">Documentation</h1>
                 <h2>Variable Assignment</h2>
                 <p>
                     In Nulang, variable assignments are made using the <code>-</code> symbol. The syntax begins with a <code>-</code> followed by the variable's name and its assignment value. 
@@ -35,39 +35,37 @@
                 </p>
                 <h2>Whitespace</h2>
                 <p>
-                    In Nulang, the "." character serves as a substitute for traditional whitespace and indentation. It functions as a separator for arguments as well as indicates indentations for loops and block structures.
+                    In Nulang, the <code>.</code> character serves as a substitute for traditional whitespace and indentation. It functions as a separator for arguments as well as indicates indentations for loops and block structures.
                 </p>
                 <h2>Basic Operator Construct</h2>
                 <p>
                     In Nulang, all operators must be used in prefix notation. 
                     <br><br>
-                    Example: ++.argument_1.argument_2&emsp;Logically equals: argument_1 + argument_2
+                    Example: <code>++.argument_1.argument_2</code>&emsp;Logically equals: argument_1 + argument_2
                 </p>
                 <h2>Comparative Operators</h2>
                 <p>
-                    ++/ &ensp; &rarr; &ensp; &gt;<br>+// &ensp; &rarr; &ensp; &gt; <br>--/ &ensp; &rarr; &ensp; &lt; 
-                    <br>-// &ensp; &rarr; &ensp; &lt; <br>/// &ensp; &rarr; &ensp; == <br>/-/ &ensp; &rarr; &ensp; !=
+                    <code>++/</code> &ensp; &rarr; &ensp; &gt;<br><code>+//</code> &ensp; &rarr; &ensp; &gt; <br><code>--/</code> &ensp; &rarr; &ensp; &lt;
+                    <br><code>-//</code> &ensp;     &rarr; &ensp; &lt; <br><code>///</code> &ensp; &rarr; &ensp; == <br><code>/-/</code> &ensp; &rarr; &ensp; !=
                 </p>
                 <h2>Binary Operators</h2>
                 <p>
-                    ++ &ensp; &rarr; &ensp; + <br>-- &ensp; &rarr; &ensp; - <br>// &ensp; &rarr; &ensp; / <br>** &ensp; &rarr; &ensp; *
+                    <code>++</code> &ensp; &rarr; &ensp; + <br><code>--</code> &ensp; &rarr; &ensp; - <br><code>//</code> &ensp; &rarr; &ensp; / <br><code>**</code> &ensp; &rarr; &ensp; *
                 </p>
                 <h2>Logical Operators</h2>
                 <p>
-                    888 &ensp; &rarr; &ensp; AND <br>111 &ensp; &rarr; &ensp; OR
+                    <code>888</code> &ensp; &rarr; &ensp; AND <br><code>111</code> &ensp; &rarr; &ensp; OR
                 </p>
                 <h2>Data Types</h2>
                 <p>
                     Strings:&emsp;Defined within <code>/-</code> and <code>-/</code>, strings represent sequences of 3-digit ASCII values.<br>
-                    &emsp;&emsp;/-.072101108108111032087111114108100033.-/&emsp;&emsp;"Hello World!"
+                    &emsp;&emsp;<code>/-.072101108108111032087111114108100033.-/</code> &ensp; &rarr; &ensp; "Hello World!"
                     <br><br>
                     Integers:&emsp;Defined within <code>/.</code> and <code>./</code><br>
-                    &emsp;&emsp;/.100./&emsp;&emsp;Represents integer 100
+                    &emsp;&emsp;<code>/.100./</code>&emsp;&emsp;Represents integer 100
                     <br><br>
                     Lists:&emsp;Defined within <code>/*</code> and <code>*/</code><br>
-                    &emsp;&emsp;/*./.1././.2././.4././.8./.*/&emsp;&emsp;[1, 2, 4, 8]
-                    Tuple:&emsp;Defined within <code>/**</code> and <code>**/</code><br>
-                    &emsp;&emsp;/**./.1././.2./.**/&emsp;&emsp;(1,2)
+                    &emsp;&emsp;<code>/*./.1././.2././.4././.8./.*/</code>&emsp;&emsp;[1, 2, 4, 8]<br><br>
                     Boolean:&emsp;Defined as either <code>0</code> or <code>1</code>
                 </p>
                 <h2>Loops</h2>  <!-- TODO -->
@@ -98,19 +96,18 @@
                 </p>
             </div>
             <div class="interpreter-side">
+                <div class="side interpreter-section">
+                    <h1 class="h1-console">Enter Code Here:</h1>
+                    <div class="ta-wrapper">
+                        <textarea class="interpreter" id="interpreter-id" ></textarea>
+                    </div>
+                </div>
                 <div class="run-button-section">
-                    <button class="run-button" onclick="runCode()">
-                        RUN
-                    </button>
+                    <button class="run-button" onclick="runCode()">RUN</button>
                 </div>
-                <div class="interpreter-section">
-                    <textarea class="interpreter" id="interpreter-id" ></textarea>
-                </div>
-                <div class="terminal-section">
-                    <h1>Terminal</h1>
-                    <p class="terminal" id="terminal-id">
-                        cols 75 rows 18
-                    </p>
+                <div class="side terminal-section">
+                    <h1 class="h1-console">Output:</h1>
+                    <p class="terminal" id="terminal-id"></p>
                 </div>
             </div>
         </div> 
