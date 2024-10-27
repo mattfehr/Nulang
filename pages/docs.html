@@ -95,6 +95,9 @@
                     Else If:&emsp;Defined as <code>12.condition</code>
                     <br><br>
                     Else:&emsp;Defined as <code>22.condition</code>
+                    <br><br>
+                    Loop Example:<br>
+                    <code>88.-.0001.++.0000./.1./.--/.0001./.11./.-.0001.++.0001./.1./<br>.947.0001<code>
 
                 </p>
                 <h2>Built in Functions</h2> <!-- TODO -->
@@ -108,13 +111,22 @@
                     &emsp;&emsp;&emsp;&emsp;Set Index:&emsp;Defined as <code>158.array.index.value</code>
 
                 </p>
-                <h2>Function Definitions</h2> <!-- TODO -->
+                <h2>Function Definitions</h2>
                 <p>
                     Function:&emsp;Defined as <code>72.function_name.parameter_n</code>, with <code>parameter_n</code> being zero to many parameters.
                     <br>
                     &emsp;&emsp;&emsp;Return:&emsp;Defined as <code>27.return_variable</code>
                     <br>&emsp;&emsp;&emsp;Returns are not required at the end of every function.
                     <br>&emsp;&emsp;&emsp;Reference:&emsp;Defined as 7.
+                    <br>
+                    <br>
+                    Function Example:<br>
+                    <code>72.1000.3000
+                        <br>.-.2000./.2./
+                        <br>.947.2000
+                        <br>.947.3000
+                        <br>
+                        <br>1000.0002<code>
                 </p>
             </div>
             <div class="interpreter-side">
@@ -129,7 +141,9 @@
                 </div>
                 <div class="side terminal-section">
                     <h1 class="h1-console">Output:</h1>
-                    <p class="terminal" id="terminal-id"></p>
+                    <div class="terminal-wrapper">
+                        <p class="terminal" id="terminal-id"></p>
+                    </div>
                 </div>
             </div>
         </div> 

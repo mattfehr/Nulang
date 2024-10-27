@@ -19,7 +19,7 @@ async function runCode() {
 
         const result = await response.json();
         terminalOutput.innerHTML = result.output.replace(/\n/g, "<br />");
-        terminalOutput.style.height = 'max-content';
+        /* terminalOutput.style.height = 'max-content'; */
     } catch (error) {
         console.error('Error:', error);
         terminalOutput.textContent = 'Error executing code: ' + error.message;
