@@ -59,7 +59,7 @@ def assignment(user_functions, variables, tokens, available_functions):
     # -.var.eval
 
     if len(tokens) < 2:
-        fatal_error(f'No value to assign.')
+        fatal_error('No value to assign.')
 
     # TODO verify valid variable name
     v, ut = eval_tokens_amount(user_functions, variables, tokens[1:], available_functions, 1)
@@ -81,8 +81,15 @@ def print_func(user_functions, variables, tokens, available_functions):
 
     r, ut = eval_tokens(user_functions, variables, tokens, available_functions)
     if len(ut) != 0:
-        fatal_error(ut)
-    print(r)
+        fatal_error(f'Unused code after print: {".".join(ut)}')
+
+    if isinstance(r, list):
+        print('/*', end='')
+        for rv in r:
+            print(rv, end='.')
+        print('*/')
+    else:
+        print(r)
 
 def length_func(_user_functions, variables, tokens, _available_functions):
     # 138.var
@@ -214,7 +221,7 @@ reserved_functions = {
     '///': equality,
     '/-/': not_equals,
 
-    # something operators
+    # something  operators
     '++': add,
     '--': sub,
     '//': division,
@@ -288,8 +295,7 @@ def eval_tokens(user_functions, variables, tokens, available_functions):
         uf_obj.current_function = False
 
     else:
-        print(variables)
-        fatal_error(f'Syntax Error:\n{tokens}')
+        fatal_error(f'Syntax Error:\n{".".join(tokens)}')
 
     return v, unused_tokens
 
@@ -326,7 +332,7 @@ def eval_lines(user_functions, variables, all_lines, parsed_lines):
                 uf_obj.current_function = False
 
             else:
-                fatal_error(f'fail at eval lines {tokenized}')
+                fatal_error(f'Failed to interpret line: {".".join(tokenized)}')
 
         else:
             if tokenized[0] == '11':
@@ -348,7 +354,7 @@ def eval_lines(user_functions, variables, all_lines, parsed_lines):
                             return '27'
                         check_elif_else = False
                 elif not if_happened:
-                    fatal_error('incorrect elif')
+                    fatal_error('Incorrect elif')
 
             elif tokenized[0] == '22':
                 if check_elif_else:
@@ -356,7 +362,7 @@ def eval_lines(user_functions, variables, all_lines, parsed_lines):
                     if pc == '27':
                         return '27'
                 elif not if_happened:
-                    fatal_error('incorrect else')
+                    fatal_error('Incorrect else')
 
             elif tokenized[0] == '88':
 
@@ -391,7 +397,7 @@ def eval_lines(user_functions, variables, all_lines, parsed_lines):
 
 def fatal_error(output):
     print(output)
-    exit()
+    exit(0)
 
 def count_starting_chars(loc):
     count = 0
@@ -432,7 +438,7 @@ def main():
             token_count = count_starting_chars(line)
 
             if token_count > len(nested):
-                fatal_error('Bad indent')
+                fatal_error('Bad indent.')
 
             elif token_count < len(nested):
                 for _ in range(len(nested) - token_count):
@@ -448,6 +454,8 @@ def main():
 
     except FileNotFoundError:
         fatal_error(f'Could not open the file {sys.argv[1]}.')
+    except Exception as e:
+        print('An error occurred.')
 
 if __name__ == '__main__':
     main()
