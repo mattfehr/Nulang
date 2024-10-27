@@ -7,6 +7,29 @@ DEF_FALSE = '0'
 DEF_TOKENIZER = '.'
 DEF_COMMENT = '*'
 
+class UserFunction:
+    def __init__(self, parsed_lines, name, partial_params, lines):
+        self.parsed_lines = parsed_lines
+        self.return_val = DEF_NULL
+        self.params = []
+        self.params_ref = {}
+        self.name = name
+        self.lines = lines
+
+        is_reference = False
+        for partial_param in partial_params:
+            if partial_param == '7':
+                is_reference = True
+            else:
+                if is_reference:
+                    self.params.append(partial_param)
+                    self.params_ref[partial_param] = True
+                else:
+                    self.params.append(partial_param)
+                    self.params_ref[partial_param] = False
+                is_reference = False
+        self.params_len = len(self.params)
+
 def eval_tokens_amount(user_functions, variables, tokens, available_functions, amount):
     values = []
 
@@ -71,6 +94,11 @@ def index_at(user_functions, variables, tokens, available_functions):
     var_val = tokens[0]
     idx, ut = eval_tokens(user_functions, variables, tokens[1:], available_functions)
     return variables[var_val][int(idx[0])], ut
+
+def uf_return(user_functions, variables, tokens, available_functions):
+    # 148.item
+
+    pass
 
 def index_set(user_functions, variables, tokens, available_functions):
     # 148.item
@@ -170,6 +198,7 @@ reserved_functions = {
     '158': index_set,
     '888': and_comp,
     '111': or_comp,
+    '27': uf_return,
 
     # comparison
     '++/': gt,
@@ -240,12 +269,12 @@ def eval_tokens(user_functions, variables, tokens, available_functions):
 
     elif tokens[0] in user_functions:
 
-        uf_tup = user_functions[tokens[0]]
+        uf_obj = user_functions[tokens[0]]
         uf_vars = {}
-        vals, ut = eval_tokens_amount(user_functions, variables, tokens[1:], available_functions, uf_tup)
+        vals, ut = eval_tokens_amount(user_functions, variables, tokens[1:], available_functions, uf_obj.params_len)
         for k, val in enumerate(vals):
-            uf_vars[uf_tup[0][k]] = val
-        eval_lines(user_functions, uf_tup, uf_tup, uf_tup)
+            uf_vars[uf_obj.params[k]] = val
+        eval_lines(user_functions, uf_vars, uf_obj.lines, uf_obj.parsed_lines)
 
     else:
         print(variables)
@@ -268,18 +297,15 @@ def eval_lines(user_functions, variables, all_lines, parsed_lines):
             if tokenized[0] in reserved_functions:
                 reserved_functions[tokenized[0]](user_functions, variables, tokenized[1:], reserved_functions)
 
-                if tokenized[0] == '27':
-                    uf_copy = list(user_functions.keys())
-                    return user_functions[uf_copy[0]][-1]
-
             elif tokenized[0] in user_functions:
 
-                uf_tup = user_functions[tokenized[0]]
+                uf_obj = user_functions[tokenized[0]]
                 uf_vars = {}
-                vals, ut = eval_tokens_amount(user_functions, variables, tokenized[1:], reserved_functions, len(uf_tup[0]))
+                vals, ut = eval_tokens_amount(user_functions, variables, tokenized[1:], reserved_functions,
+                                              uf_obj.params_len)
                 for k, val in enumerate(vals):
-                    uf_vars[uf_tup[0][k]] = val
-                eval_lines(user_functions, uf_vars, uf_tup[2], uf_tup[1])
+                    uf_vars[uf_obj.params[k]] = val
+                eval_lines(user_functions, uf_vars, uf_obj.lines, uf_obj.parsed_lines)
 
             else:
                 fatal_error(f'fail at eval lines {tokenized}')
@@ -331,7 +357,9 @@ def eval_lines(user_functions, variables, all_lines, parsed_lines):
                 # 1 - parsed lines
                 # 2 - all lines
                 # 3 - return val
-                user_functions[tokenized[1]] = (tokenized[2:], parsed_lines[line_num], all_lines, DEF_NULL)
+                uf_obj = UserFunction(parsed_lines[line_num], tokenized[1], tokenized[2:], all_lines)
+                user_functions[tokenized[1]] = uf_obj
+                # user_functions[tokenized[1]] = (tokenized[2:], parsed_lines[line_num], all_lines, DEF_NULL)
 
 def fatal_error(output):
     print(output)
