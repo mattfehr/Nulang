@@ -1,20 +1,40 @@
-.column {
-    float: left;
-  }
+.header-section {
+  display: flex;
+  background-color: aqua;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.title-section {
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.links-section {
+  display: flex;
+  background-color: aliceblue;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.main {
+  display: flex;
+}
   
-  /* Left column (Documentation) */
-  .documentation-side {
-    width: 55%;
+/* Left column (Documentation) */
+.documentation-side {
+  width: 55%;
+  overflow-y: auto; 
+}
+
+/* Right column (Playground)*/
+.interpreter-side {
+  width: 35%;
+}
+
+/* Responsive layout - makes the three columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 600px) {
+  .documentation-side, .interpreter-side {
+    width: 100%;
   }
-  
-  /* Right column (Playground)*/
-  .interpreter-side {
-    width: 35%;
-  }
-  
-  /* Responsive layout - makes the three columns stack on top of each other instead of next to each other */
-  @media screen and (max-width: 600px) {
-    .documentation-side, .interpreter-side {
-      width: 100%;
-    }
-  }
+}

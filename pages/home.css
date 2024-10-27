@@ -1,5 +1,26 @@
-.column {
-  float: left;
+.header-section {
+  display: flex;
+  background-color: aqua;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.title-section {
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.links-section {
+  display: flex;
+  background-color: aliceblue;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  background-color: bisque ;
 }
 
 /* Left column (Documentation) */
