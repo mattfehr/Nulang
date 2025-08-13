@@ -1,0 +1,24 @@
+# IDE & OS junk
+.idea/
+.DS_Store
+
+# Git
+.git
+.gitignore
+
+# Python build stuff
+__pycache__/
+*.pyc
+*.pyo
+
+# Virtual envs
+venv/
+
+# Temp Nulang programs created at runtime
+temp_*.nu
+*.nu
+
+# Not needed in the image
+nulang
+sample_code/
+quick_sort.c
